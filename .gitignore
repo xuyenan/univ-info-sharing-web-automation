@@ -1,0 +1,11 @@
+__pycache__
+
+*.xlsx
+
+# 问卷数据表
+res/data
+
+# 登录信息
+login.txt
+
+test.py

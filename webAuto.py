@@ -17,7 +17,7 @@ def webInit():
     url = 'https://www.wolai.com/login'
 
     wd.get(url)
-    wd.implicitly_wait(10)
+    wd.implicitly_wait(20)
     return wd
 
 
@@ -77,17 +77,18 @@ def addRow(wd: webdriver, dataList: list):
     anchor = f'[data-index="0"]>div>div>div:nth-child(7)'
     wd.find_element(By.CSS_SELECTOR, anchor).click() 
     fillGrid(wd.switch_to.active_element, dataList[9])
-    # 专业认识
-    anchor = f'[data-index="0"]>div>div>div:nth-child(8)'
-    wd.find_element(By.CSS_SELECTOR, anchor).click()
-    fillGrid(wd.switch_to.active_element, dataList[10])
+    
     # 联系方式
     anchor = f'[data-index="0"]>div>div>div:nth-child(9)'
     wd.find_element(By.CSS_SELECTOR, anchor).click()
     fillGrid(wd.switch_to.active_element, dataList[11])
-
-    sleep(0.5)
-
+    
+    # 专业认识  这部分内容较多，可能会引起网页出故障，所以放在最后，并留足时间
+    anchor = f'[data-index="0"]>div>div>div:nth-child(8)'
+    wd.find_element(By.CSS_SELECTOR, anchor).click()
+    fillGrid(wd.switch_to.active_element, dataList[10])
+    sleep(8)
+    
 
 # 提取大学名称，提取前：xx省 | xx市 | xx大学
 def getUni(s):
@@ -101,6 +102,7 @@ def fillGrid(wd_element, sentence: str):
         s = s.replace('\t', 'tab')
         wd_element.send_keys(s)
         wd_element.send_keys(Keys.SHIFT, '\n')
+        sleep(1)
     wd_element.send_keys(Keys.BACKSPACE)
     wd_element.send_keys('\n')
 

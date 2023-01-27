@@ -46,6 +46,7 @@ def process():
 
     csvFile = path + time.strftime('%y%m%d%H%M%S', time.localtime()) + '.csv'
     pre.to_csv(csvFile)
+    print('csv-file saved successfully!')
 
     return csvFile
 

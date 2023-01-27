@@ -20,6 +20,7 @@ def score2ranke(score: int, year: int, subject: str):
     return df.loc[maxScore - score][1]
  
 
+# 处理数据：计算排名，保存本次处理数据
 def process():
 
     path = './res/data/'
@@ -68,5 +69,3 @@ def fillTable(csvFile):
 if __name__ == '__main__':
     f = process()
     fillTable(f)
-
-

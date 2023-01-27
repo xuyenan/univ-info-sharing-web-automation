@@ -7,12 +7,9 @@ import os
 # 根据分数查找排名
 def score2ranke(score: int, year: int, subject: str):
 
-    if subject == '理科':
-        fileName = './res/rankedList/' + str(year) + 'li.csv'
-    elif subject == '文科':
-        fileName = './res/rankedList/' + str(year) + 'wen.csv'
-    else:
-        return 0
+    path = './res/rankedList/'
+    exts = 'li.csv' if subject == '理科' else 'wen.csv'    
+    fileName = path + str(year) + exts
 
     df = pd.read_csv(fileName)
     maxScore = df.loc[0][0]

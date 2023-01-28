@@ -86,7 +86,7 @@ def addRow(wd: webdriver, dataList: list):
     # 专业认识  这部分内容较多，可能会引起网页出故障，所以放在最后，并留足时间
     anchor = f'[data-index="0"]>div>div>div:nth-child(8)'
     wd.find_element(By.CSS_SELECTOR, anchor).click()
-    fillGrid(wd.switch_to.active_element, dataList[10])
+    fillGrid_temp(wd.switch_to.active_element, dataList[10])
     sleep(8)
     
 
@@ -99,13 +99,17 @@ def getUni(s):
 # 处理含'\n''\t'的信息的填写
 def fillGrid(wd_element, sentence: str):
     for s in sentence.split(sep='\n'):
-        s = s.replace('\t', 'tab')
+        s = s.replace('\t', '  ')
         wd_element.send_keys(s)
         wd_element.send_keys(Keys.SHIFT, '\n')
         sleep(1)
     wd_element.send_keys(Keys.BACKSPACE)
     wd_element.send_keys('\n')
 
+# 临时用这个函数代替一下
+def fillGrid_temp(wd_element, sentence: str):
+    s = sentence.replace('\n', '    ').replace('\t', '  ')
+    wd_element.send_keys(s + '\n')
 
 
 # 仅用于测试该模块

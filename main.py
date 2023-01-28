@@ -8,8 +8,15 @@ import os
 def score2ranke(score: int, year: int, subject: str):
 
     path = './res/rankedList/'
-    exts = 'li.csv' if subject == '理科' else 'wen.csv'    
-    fileName = path + str(year) + exts
+    exts = 'li.csv' if subject == '理科' else 'wen.csv'  
+    year = str(year)
+
+    if len(year) == 2:     # 填写内容可能是22，而不是预期的2022
+        year = '20' + year
+    if int(year) < 2018:   # 暂时用2022的数据替代
+        year = '2022'
+
+    fileName = path + year + exts
 
     df = pd.read_csv(fileName)
     maxScore = df.loc[0][0]
@@ -30,7 +37,7 @@ def process():
     preProcess = max(oringals) # 最新的导出数据
     oldProcess = max(finals)   # 上次的处理数据
 
-    pre = pd.read_csv(path + preProcess, encoding='GB2312')
+    pre = pd.read_csv(path + preProcess, encoding='GB18030') # 部分内容含颜文字，gb3212不能够胜任
     old = pd.read_csv(path + oldProcess, encoding='utf8')
 
     oldLastIndex = old.iloc[-1].to_list()[1]   # 上次处理数据的最后一个答题序号

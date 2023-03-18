@@ -42,6 +42,7 @@ def process():
 
     oldLastIndex = old.iloc[-1].to_list()[1]   # 上次处理数据的最后一个答题序号
     pre = pre.loc[pre['答题序号'] > oldLastIndex]
+    pre = pre.loc[pre['Q4_高考分数'] < 750]     # 极个别人乱填
 
     # 计算加分后的名次
     pre['addedScore'] = pre['Q4_高考分数'] + pre['Q5_少数民族加分']
@@ -69,6 +70,12 @@ def fillTable(csvFile):
     df = pd.read_csv(csvFile, encoding='utf8')
     for row in df.itertuples():
         addRow(wd, list(row[1:]))
+
+    # 填写更新时间 - 暂未能实现覆盖的效果
+    # anchor = f'[data-index="0"]>div>div>div:nth-child(8)'
+    # wd.find_element(By.CSS_SELECTOR, anchor).click()
+    # cur = time.strftime('%Y-%m-%d %H:%M', time.localtime())
+    # wd.switch_to.active_element.send_keys(cur)
 
     print('----------------------done!-----------------------------')
     sleep(10)
